@@ -4,7 +4,7 @@
     "description": "Node app",
     "type": "module",
     "scripts": {
-        "start": "node build/src/main.js",
+        "start": "node app.js",
         "lint": "eslint . --ext .js",
         "test": "jest --coverage",
         "test:watch": "jest --watch"

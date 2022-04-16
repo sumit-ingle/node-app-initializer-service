@@ -5,21 +5,42 @@ import { GenerateRequest } from '../models/GenerateRequest';
 
 @Service()
 export default class GeneratorService {
+  public languageExtensions = { typescript: 'ts', javascript: 'js' };
+
   public async generateNodeApp(generateRequest: GenerateRequest): Promise<string> {
-    const packageJsonFile = fs.readFileSync('resources/app-base/package.json', 'utf8');
-    const packageJson: PackageJson = JSON.parse(packageJsonFile);
-    this.addDependencies(generateRequest.dependencies, packageJson);
+    fs.writeFileSync(
+      'resources/app-base/app.' + this.getLanguageExtension(generateRequest.language),
+      '',
+    );
+    this.buildPackageJson(generateRequest);
     return 'resources/sample.zip';
   }
 
-  private addDependencies(
+  private getLanguageExtension(language: string): string {
+    return this.languageExtensions[language];
+  }
+
+  private buildPackageJson(generateRequest: GenerateRequest): void {
+    const packageJsonFile = fs.readFileSync('resources/app-base/package.json', 'utf8');
+    const packageJson: PackageJson = JSON.parse(packageJsonFile);
+    this.setScripts(packageJson, generateRequest);
+    this.addDevDependencies(generateRequest.dependencies, packageJson);
+    this.configureTypeScript(generateRequest, packageJson);
+  }
+
+  private setScripts(packageJson: PackageJson, generateRequest: GenerateRequest): void {
+    packageJson.scripts['start'] =
+      'node app.' + this.getLanguageExtension(generateRequest.language);
+  }
+
+  private addDevDependencies(
     dependencies: [{ name: string; version: string }],
     packageJson: PackageJson,
   ): void {
     dependencies.forEach((dependency) => {
-      packageJson.dependencies[dependency.name] = dependency.version;
+      packageJson.devDependencies[dependency.name] = dependency.version;
     });
   }
 
-  // private addDependency(dependency) {}
+  private configureTypeScript(generateRequest: GenerateRequest, packageJson: PackageJson): void {}
 }
