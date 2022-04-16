@@ -4,6 +4,7 @@ import { PackageJson } from '../models/PackageJson';
 import { GenerateRequest } from '../models/GenerateRequest';
 import { languageExtensions } from '../constants/languageExtensions';
 import { dependencyHandlers } from './dependencyHandlers';
+import AdmZip from 'adm-zip';
 
 @Service()
 export default class GeneratorService {
@@ -13,7 +14,15 @@ export default class GeneratorService {
       '',
     );
     this.buildPackageJson(generateRequest);
+    this.buildZipFile();
     return 'resources/sample.zip';
+  }
+
+  private buildZipFile(): void {
+    const outputFile = 'resources/sample.zip';
+    const zip = new AdmZip();
+    zip.addLocalFolder('resources/app', 'app');
+    zip.writeZip(outputFile);
   }
 
   private getLanguageExtension(language: string): string {
