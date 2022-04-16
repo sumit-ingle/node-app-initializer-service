@@ -11,8 +11,8 @@ export default (app) => {
   route.post('/generate', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const generatorService = Container.get(GeneratorService);
-      const appUrl = await generatorService.generateNodeApp(req.body as GenerateRequest);
-      return res.download(appUrl);
+      const appPath = await generatorService.generateNodeApp(req.body as GenerateRequest);
+      return res.download(appPath);
     } catch (e) {
       console.log(' error ', e);
       return next(e);

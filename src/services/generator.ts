@@ -6,10 +6,10 @@ import { GenerateRequest } from '../models/GenerateRequest';
 @Service()
 export default class GeneratorService {
   public async generateNodeApp(generateRequest: GenerateRequest): Promise<string> {
-    const packageJsonFile = fs.readFileSync('../../resources/app-base/package.json', 'utf8');
+    const packageJsonFile = fs.readFileSync('resources/app-base/package.json', 'utf8');
     const packageJson: PackageJson = JSON.parse(packageJsonFile);
     this.addDependencies(generateRequest.dependencies, packageJson);
-      return 'resources/sample.zip';
+    return 'resources/sample.zip';
   }
 
   private addDependencies(
@@ -17,7 +17,7 @@ export default class GeneratorService {
     packageJson: PackageJson,
   ): void {
     dependencies.forEach((dependency) => {
-      packageJson.dependencies.set(dependency.name, dependency.version);
+      packageJson.dependencies[dependency.name] = dependency.version;
     });
   }
 
