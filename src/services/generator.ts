@@ -2,14 +2,14 @@ import { Service } from 'typedi';
 import * as fs from 'fs';
 import { PackageJson } from '../models/PackageJson';
 import { GenerateRequest } from '../models/GenerateRequest';
+import { languageExtensions } from '../constants/languageExtensions';
+import { dependencyHandlers } from './dependencyHandlers';
 
 @Service()
 export default class GeneratorService {
-  public languageExtensions = { typescript: 'ts', javascript: 'js' };
-
   public async generateNodeApp(generateRequest: GenerateRequest): Promise<string> {
     fs.writeFileSync(
-      'resources/app-base/app.' + this.getLanguageExtension(generateRequest.language),
+      'resources/app/app.' + this.getLanguageExtension(generateRequest.language),
       '',
     );
     this.buildPackageJson(generateRequest);
@@ -17,15 +17,22 @@ export default class GeneratorService {
   }
 
   private getLanguageExtension(language: string): string {
-    return this.languageExtensions[language];
+    return languageExtensions[language];
   }
 
   private buildPackageJson(generateRequest: GenerateRequest): void {
     const packageJsonFile = fs.readFileSync('resources/app-base/package.json', 'utf8');
     const packageJson: PackageJson = JSON.parse(packageJsonFile);
+    this.setMetadata(packageJson, generateRequest);
     this.setScripts(packageJson, generateRequest);
     this.addDevDependencies(generateRequest.dependencies, packageJson);
-    this.configureTypeScript(generateRequest, packageJson);
+    fs.writeFileSync('resources/app/package.json', JSON.stringify(packageJson, undefined, '\t'));
+  }
+
+  private setMetadata(packageJson: PackageJson, generateRequest: GenerateRequest): void {
+    packageJson.name = generateRequest.name;
+    packageJson.description = generateRequest.description;
+    packageJson.author = generateRequest.author;
   }
 
   private setScripts(packageJson: PackageJson, generateRequest: GenerateRequest): void {
@@ -39,8 +46,7 @@ export default class GeneratorService {
   ): void {
     dependencies.forEach((dependency) => {
       packageJson.devDependencies[dependency.name] = dependency.version;
+      dependencyHandlers.eslint(dependency, packageJson);
     });
   }
-
-  private configureTypeScript(generateRequest: GenerateRequest, packageJson: PackageJson): void {}
 }
