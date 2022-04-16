@@ -1,5 +1,4 @@
 export function parseCompatibleNodeVersion(jsonData: any, nodeVersion: string): any  {
-    console.log('json data', jsonData);
     const versionDetails = Object.values(jsonData.versions);
     return versionDetails.filter(obj => {
         return obj._nodeVersion >= nodeVersion;

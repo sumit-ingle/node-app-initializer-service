@@ -13,7 +13,7 @@ export default (app: Router) => {
     route.get(
         '/:nodeVersion',
         async (req: Request, res: Response) => {
-            return res.json(getNpmPackages(req.params.nodeVersion)).status(200);
+            return res.json(await getNpmPackages(req.params.nodeVersion)).status(200);
         }
     );
 };
