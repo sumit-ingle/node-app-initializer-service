@@ -12,7 +12,7 @@ export default (app: express.Application) => {
   app.use(bodyParser.json());
   app.use(errors());
 
-  app.use('/api', routes);
+  app.use('/', routes);
 
   /// catch 404 and forward to error handler
   app.use((req, res, next) => {
