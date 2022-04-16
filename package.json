@@ -5,7 +5,7 @@
   "main": "main.ts",
   "repository": "https://github.com/satishbabariya/nodejs-boilerplate.git",
   "author": "uno+4",
-  "license": "Techverito",
+  "license": "MIT",
   "private": false,
   "scripts": {
     "build": "tsc",

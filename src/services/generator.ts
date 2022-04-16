@@ -10,7 +10,7 @@ export default class GeneratorService {
   public async generateNodeApp(generateRequest: GenerateRequest): Promise<string> {
     fs.writeFileSync(
       'resources/app-base/app.' + this.getLanguageExtension(generateRequest.language),
-      '',
+      ''
     );
     this.buildPackageJson(generateRequest);
     return 'resources/sample.zip';
