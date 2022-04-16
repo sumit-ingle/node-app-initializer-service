@@ -1,7 +1,7 @@
-import { celebrate, Joi } from 'celebrate';
 import { NextFunction, Request, Response, Router } from 'express';
 import { Container } from 'typedi';
 import GeneratorService from '../../../services/generator';
+import { GenerateRequest } from '../../../models/GenerateRequest';
 
 const route = Router();
 

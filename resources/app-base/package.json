@@ -1,0 +1,18 @@
+{
+    "name": "node-app",
+    "version": "0.0.0",
+    "description": "Node app",
+    "type": "module",
+    "scripts": {
+        "start": "node build/src/main.js",
+        "lint": "eslint . --ext .js",
+        "test": "jest --coverage",
+        "test:watch": "jest --watch"
+    },
+    "author": "Node App Initializer",
+    "license": "Add your license type",
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}
