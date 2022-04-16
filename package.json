@@ -1,10 +1,10 @@
 {
-  "name": "nodejs-boilerplate",
+  "name": "node-app-initializer-service",
   "version": "1.0.0",
-  "description": "Clean Architecture for node.js projects (Typescript + Express + TypeORM + Typedi)",
+  "description": "Node App Initializer",
   "main": "main.ts",
   "repository": "https://github.com/satishbabariya/nodejs-boilerplate.git",
-  "author": "Satish Babariya <satish.babariya@gmail.com>",
+  "author": "uno+4",
   "license": "MIT",
   "private": false,
   "scripts": {

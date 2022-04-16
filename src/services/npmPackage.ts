@@ -7,14 +7,20 @@ export type npmPackagesResponse = {
     version: string;
 };
 
-export const fetchNpmPackageDetails = (name: string) => {
-    const npmRegistryUrl = 'https://registry.npmjs.org/';
-    return axios.get(`${npmRegistryUrl}\\name`);
+export const fetchNpmPackageDetails = async (name: string) => {
+    const npmRegistryUrl = `https://registry.npmjs.org/${name}`;
+    console.log('npmRegistryUrl', npmRegistryUrl);
+    return axios.get(npmRegistryUrl);
 };
 
-export function getNpmPackages(nodeVersion: string): npmPackagesResponse[] {
-    const response = supportedPackages
-        .map(async (supportedPackage) => await fetchNpmPackageDetails(supportedPackage));
+export async function getNpmPackages(nodeVersion: string): Promise<npmPackagesResponse[]> {
+    const packages = Promise.all(supportedPackages
+        .map((supportedPackage) => fetchNpmPackageDetails(supportedPackage)))
+        .then(responses => {
+            return responses.map(
+                (res) => parseCompatibleNodeVersion(res.data, nodeVersion),
+            );
+        });
 
-    return [];
+    return packages;
 }
