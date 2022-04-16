@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { PackageJson } from '../models/PackageJson';
 import { GenerateRequest } from '../models/GenerateRequest';
 import { languageExtensions } from '../constants/languageExtensions';
-import { dependencyHandlers } from './dependencyHandlers';
+import { dependencyHandlers } from './handlers/dependencyHandlers';
 import AdmZip from 'adm-zip';
 
 @Service()
