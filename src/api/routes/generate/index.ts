@@ -12,7 +12,7 @@ export default (app) => {
     try {
       const generatorService = Container.get(GeneratorService);
       const appUrl = await generatorService.generateNodeApp(req.body as GenerateRequest);
-      return res.json({ appUrl }).status(200);
+      return res.download(appUrl);
     } catch (e) {
       console.log(' error ', e);
       return next(e);
