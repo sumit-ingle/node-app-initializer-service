@@ -55,7 +55,9 @@ export default class GeneratorService {
   ): void {
     dependencies.forEach((dependency) => {
       packageJson.devDependencies[dependency.name] = dependency.version;
-      dependencyHandlers.eslint(dependency, packageJson);
+      for (const key in dependencyHandlers) {
+        dependencyHandlers[key](dependency, packageJson);
+      }
     });
   }
 }

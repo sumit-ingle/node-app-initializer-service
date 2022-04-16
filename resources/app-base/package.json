@@ -4,9 +4,7 @@
     "description": "Node app",
     "type": "module",
     "scripts": {
-        "start": "node app.js",
-        "test": "jest --coverage",
-        "test:watch": "jest --watch"
+        "start": "node app.js"
     },
     "author": "Node App Initializer",
     "license": "Add your license type",
