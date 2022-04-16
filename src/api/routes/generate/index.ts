@@ -8,25 +8,14 @@ const route = Router();
 export default (app) => {
   app.use('/app', route);
 
-  route.post(
-    '/generate',
-    celebrate({
-      body: Joi.object({
-        nodeVersion: Joi.string().trim().min(1).required(),
-        language: Joi.string().trim().required(),
-        dependencies: Joi.array().items(
-          Joi.object({ name: Joi.string().required(), version: Joi.string().required() }),
-        ),
-      }),
-    }),
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const generatorService = Container.get(GeneratorService);
-        return await generatorService.generateNodeApp(req.body as GenerateRequest);
-      } catch (e) {
-        console.log(' error ', e);
-        return next(e);
-      }
-    },
-  );
+  route.post('/generate', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const generatorService = Container.get(GeneratorService);
+      const appUrl = await generatorService.generateNodeApp(req.body as GenerateRequest);
+      return res.json({ appUrl }).status(200);
+    } catch (e) {
+      console.log(' error ', e);
+      return next(e);
+    }
+  });
 };
