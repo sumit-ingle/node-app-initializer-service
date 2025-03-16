@@ -1,5 +1,3 @@
-try! [resty.js](https://github.com/restyjs/resty), my newest node.js + express based framework. with controllers and middlewares built in.
-
 # Node App Initializer
 This tool allows you to generate a Node.js project, so that you can skip the laborious process of writing boilerplate code yourself.
 
